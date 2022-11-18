@@ -1,0 +1,75 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model cargo_enquadramento {
+  id           Int            @id @default(autoincrement())
+  nome         String?        @db.VarChar(45)
+  funcionarios funcionarios[]
+}
+
+model cargos {
+  id           Int            @id @default(autoincrement())
+  nome         String?        @db.VarChar(45)
+  funcionarios funcionarios[]
+}
+
+model equipes {
+  id           Int            @id @default(autoincrement())
+  nome         String?        @db.VarChar(45)
+  funcionarios funcionarios[]
+}
+
+model grupo_ocupacional {
+  id           Int            @id @default(autoincrement())
+  nome         String?        @db.VarChar(45)
+  funcionarios funcionarios[]
+}
+
+model tipo_contrato {
+  id           Int            @id @default(autoincrement())
+  nome         String?        @db.VarChar(45)
+  funcionarios funcionarios[]
+}
+
+model vinculos {
+  id           Int            @id @default(autoincrement())
+  nome         String?        @db.VarChar(45)
+  funcionarios funcionarios[]
+}
+
+model funcionarios {
+  id                     Int                 @id @default(autoincrement())
+  matriz                 Int?
+  nome                   String?             @db.VarChar(255)
+  vinculos_id            Int
+  cargos_id              Int
+  salario                Int
+  premio                 Int?
+  localidade             String?             @db.VarChar(45)
+  data_nascimento        DateTime?           @db.Date
+  dependentes            Int?
+  tipo_contrato_id       Int
+  data_admissao          DateTime?           @db.Date
+  grupo_ocupacional_id   Int
+  equipe_id              Int
+  cargo_enquadramento_id Int
+  cargo_enquadramento    cargo_enquadramento @relation(fields: [cargo_enquadramento_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_base_cargo_enquadramento1")
+  cargos                 cargos              @relation(fields: [cargos_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_base_cargos1")
+  equipes                equipes             @relation(fields: [equipe_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_base_equipe1")
+  grupo_ocupacional      grupo_ocupacional   @relation(fields: [grupo_ocupacional_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_base_grupo_ocupacional1")
+  tipo_contrato          tipo_contrato       @relation(fields: [tipo_contrato_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_base_tipo_contrato1")
+  vinculos               vinculos            @relation(fields: [vinculos_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_base_vinculos")
+
+  @@index([cargo_enquadramento_id], map: "fk_base_cargo_enquadramento1_idx")
+  @@index([cargos_id], map: "fk_base_cargos1_idx")
+  @@index([equipe_id], map: "fk_base_equipe1_idx")
+  @@index([grupo_ocupacional_id], map: "fk_base_grupo_ocupacional1_idx")
+  @@index([tipo_contrato_id], map: "fk_base_tipo_contrato1_idx")
+  @@index([vinculos_id], map: "fk_base_vinculos_idx")
+}

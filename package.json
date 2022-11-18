@@ -18,7 +18,9 @@
   },
   "homepage": "https://github.com/marcusvsfreitas/calculadora-way-carbon-api#readme",
   "dependencies": {
-    "express": "^4.18.2"
+    "@prisma/client": "^4.6.1",
+    "express": "^4.18.2",
+    "prisma": "^4.6.1"
   },
   "devDependencies": {
     "@types/express": "^4.17.14",
