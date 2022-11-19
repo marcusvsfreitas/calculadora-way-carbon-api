@@ -23,7 +23,21 @@ class PrismaFuncionariosRepository implements IFuncionariosRepository {
   }
 
   async list(): Promise<Funcionario[]> {
-    const funcionarios = prisma.funcionarios.findMany();
+    const funcionarios = prisma.funcionarios.findMany({
+      include: {
+        cargos: true,
+        cargo_enquadramento: true,
+        tipo_contrato: true,
+        vinculos: true,
+        equipes: true,
+        grupo_ocupacional: true,
+      },
+      orderBy: [
+        {
+          nome: 'asc'
+        }
+      ]
+    });
 
     return funcionarios;
   }
