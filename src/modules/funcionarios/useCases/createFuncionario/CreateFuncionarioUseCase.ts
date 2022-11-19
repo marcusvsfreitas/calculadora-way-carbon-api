@@ -20,7 +20,7 @@ interface IRequest {
 class CreateFuncionarioUseCase {
   constructor(private funcionariosRepository: IFuncionariosRepository) {}
 
-  execute({
+  async execute({
     matriz,
     nome,
     vinculos_id,
@@ -37,7 +37,7 @@ class CreateFuncionarioUseCase {
     cargo_enquadramento_id
   } : IRequest){
 
-    this.funcionariosRepository.create({
+    const funcionario = await this.funcionariosRepository.create({
       matriz,
       nome,
       vinculos_id,
@@ -53,6 +53,8 @@ class CreateFuncionarioUseCase {
       equipe_id,
       cargo_enquadramento_id
     });
+
+    return funcionario;
   }
 }
 

@@ -4,7 +4,7 @@ import { CreateFuncionarioUseCase } from './CreateFuncionarioUseCase';
 class CreateFuncionarioController {
   constructor(private createFuncionarioUseCase: CreateFuncionarioUseCase) {}
 
-  handle(request: Request, response: Response){
+  async handle(request: Request, response: Response){
     const {
       matriz,
       nome,
@@ -23,7 +23,7 @@ class CreateFuncionarioController {
     } = request.body;
 
   
-    this.createFuncionarioUseCase.execute({
+    const funcionario = await this.createFuncionarioUseCase.execute({
       matriz,
       nome,
       vinculos_id,
@@ -40,7 +40,7 @@ class CreateFuncionarioController {
       cargo_enquadramento_id
     });
   
-    return response.status(201).send();
+    return response.status(201).json(funcionario);
   }
 }
 

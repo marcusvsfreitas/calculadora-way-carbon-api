@@ -18,7 +18,7 @@ interface ICreateFuncionarioDTO {
 }
 
 interface IFuncionariosRepository {
-  list(): Funcionario[];
+  list(): Promise<Funcionario[]>;
   create({ 
     matriz,
     nome,
@@ -34,7 +34,7 @@ interface IFuncionariosRepository {
     grupo_ocupacional_id,
     equipe_id,
     cargo_enquadramento_id
-  } : ICreateFuncionarioDTO) : void;
+  } : ICreateFuncionarioDTO) : Promise<Funcionario>;
 }
 
 export { IFuncionariosRepository, ICreateFuncionarioDTO };

@@ -16,21 +16,17 @@ class PrismaFuncionariosRepository implements IFuncionariosRepository {
     return PrismaFuncionariosRepository.INSTANCE;
   }
 
+  async create({ matriz, nome, vinculos_id, cargos_id, salario, premio, localidade, data_nascimento, dependentes, tipo_contrato_id, data_admissao, grupo_ocupacional_id, equipe_id, cargo_enquadramento_id }: ICreateFuncionarioDTO): Promise<Funcionario> {
+    const funcionario = prisma.funcionarios.create({ data: {matriz, nome, vinculos_id, cargos_id, salario, premio, localidade, data_nascimento, dependentes, tipo_contrato_id, data_admissao, grupo_ocupacional_id, equipe_id, cargo_enquadramento_id }});
 
-
-  async create({ matriz, nome, vinculos_id, cargos_id, salario, premio, localidade, data_nascimento, dependentes, tipo_contrato_id, data_admissao, grupo_ocupacional_id, equipe_id, cargo_enquadramento_id }: ICreateFuncionarioDTO): Promise<void> {
-
-    const result = await prisma.funcionarios.create({ data: {matriz, nome, vinculos_id, cargos_id, salario, premio, localidade, data_nascimento, dependentes, tipo_contrato_id, data_admissao, grupo_ocupacional_id, equipe_id, cargo_enquadramento_id }});
-
-    console.log(result);
+    return funcionario;
   }
 
-  list(): Funcionario[] {
-    throw new Error("Method not implemented.");
+  async list(): Promise<Funcionario[]> {
+    const funcionarios = prisma.funcionarios.findMany();
+
+    return funcionarios;
   }
- 
-
-
 }
 
 export { PrismaFuncionariosRepository };
