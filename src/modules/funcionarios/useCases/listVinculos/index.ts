@@ -1,8 +1,8 @@
-import { PrismaVinculoRepository } from "../../repositories/PrismaVinculoRepository";
+import { PrismaVinculosRepository } from "../../repositories/PrismaVinculosRepository";
 import { ListVinculosController } from "./ListVinculosController";
 import { ListVinculosUseCase } from "./ListVinculosUseCase";
 
-const vinculosRepository = PrismaVinculoRepository.getInstance();
+const vinculosRepository = PrismaVinculosRepository.getInstance();
 const listVinculosUseCase = new ListVinculosUseCase(vinculosRepository);
 const listVinculosController = new ListVinculosController(listVinculosUseCase);
 

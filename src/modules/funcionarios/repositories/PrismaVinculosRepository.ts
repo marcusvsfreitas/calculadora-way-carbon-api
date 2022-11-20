@@ -4,15 +4,15 @@ import { ICreateVinculoDTO, IVinculosRepository } from './IVinculosRepository';
 
 const prisma = new PrismaClient();
 
-class PrismaVinculoRepository implements IVinculosRepository {
-  private static INSTANCE: PrismaVinculoRepository;
+class PrismaVinculosRepository implements IVinculosRepository {
+  private static INSTANCE: PrismaVinculosRepository;
 
-  public static getInstance(): PrismaVinculoRepository {
-    if(!PrismaVinculoRepository.INSTANCE){
-      PrismaVinculoRepository.INSTANCE = new PrismaVinculoRepository();
+  public static getInstance(): PrismaVinculosRepository {
+    if(!PrismaVinculosRepository.INSTANCE){
+      PrismaVinculosRepository.INSTANCE = new PrismaVinculosRepository();
     }
 
-    return PrismaVinculoRepository.INSTANCE;
+    return PrismaVinculosRepository.INSTANCE;
   }
 
 
@@ -37,4 +37,4 @@ class PrismaVinculoRepository implements IVinculosRepository {
   }
 }
 
-export { PrismaVinculoRepository };
+export { PrismaVinculosRepository };
