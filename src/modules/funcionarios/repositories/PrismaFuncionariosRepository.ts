@@ -4,7 +4,6 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-
 class PrismaFuncionariosRepository implements IFuncionariosRepository {
   private static INSTANCE: PrismaFuncionariosRepository;
 
@@ -23,7 +22,7 @@ class PrismaFuncionariosRepository implements IFuncionariosRepository {
   }
 
   async list(): Promise<Funcionario[]> {
-    const funcionarios = prisma.funcionarios.findMany({
+    let funcionarios = await prisma.funcionarios.findMany({
       include: {
         cargos: true,
         cargo_enquadramento: true,
@@ -37,6 +36,14 @@ class PrismaFuncionariosRepository implements IFuncionariosRepository {
           nome: 'asc'
         }
       ]
+    });
+
+    funcionarios = funcionarios.map(funcionario => {
+      return {
+        ...funcionario,
+        salarioTratado: funcionario.salario ? funcionario.salario / 100 : 0,
+        premioTratado: funcionario.premio ? funcionario.premio / 100 : 0,
+      }
     });
 
     return funcionarios;

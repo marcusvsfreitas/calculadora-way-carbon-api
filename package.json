@@ -19,6 +19,7 @@
   "homepage": "https://github.com/marcusvsfreitas/calculadora-way-carbon-api#readme",
   "dependencies": {
     "@prisma/client": "^4.6.1",
+    "cors": "^2.8.5",
     "express": "^4.18.2",
     "prisma": "^4.6.1"
   },
