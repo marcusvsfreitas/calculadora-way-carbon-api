@@ -35,6 +35,7 @@ interface IFuncionariosRepository {
     equipe_id,
     cargo_enquadramento_id
   } : ICreateFuncionarioDTO) : Promise<Funcionario>;
+  findByID(id: number): Promise<Funcionario>;
 }
 
 export { IFuncionariosRepository, ICreateFuncionarioDTO };

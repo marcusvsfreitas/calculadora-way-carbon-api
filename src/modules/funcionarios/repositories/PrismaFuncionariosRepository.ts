@@ -3,7 +3,6 @@ import { ICreateFuncionarioDTO, IFuncionariosRepository } from "./IFuncionariosR
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
-
 class PrismaFuncionariosRepository implements IFuncionariosRepository {
   private static INSTANCE: PrismaFuncionariosRepository;
 
@@ -47,6 +46,16 @@ class PrismaFuncionariosRepository implements IFuncionariosRepository {
     });
 
     return funcionarios;
+  }
+
+  async findByID(id: number): Promise<Funcionario>  {
+    const funcionario = await prisma.funcionarios.findUnique({
+      where: {
+        id
+      },
+    })
+
+    return funcionario;
   }
 }
 
