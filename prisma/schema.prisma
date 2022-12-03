@@ -38,9 +38,11 @@ model tipo_contrato {
 }
 
 model vinculos {
-  id           Int            @id @default(autoincrement())
-  nome         String?        @db.VarChar(45)
-  funcionarios funcionarios[]
+  id                         Int                          @id @default(autoincrement())
+  nome                       String?                      @db.VarChar(45)
+  cargos_salarios            cargos_salarios[]
+  funcionarios               funcionarios[]
+  simulacoes_cargos_salarios simulacoes_cargos_salarios[]
 }
 
 model funcionarios {
@@ -72,4 +74,46 @@ model funcionarios {
   @@index([grupo_ocupacional_id], map: "fk_base_grupo_ocupacional1_idx")
   @@index([tipo_contrato_id], map: "fk_base_tipo_contrato1_idx")
   @@index([vinculos_id], map: "fk_base_vinculos_idx")
+}
+
+model cargos_salarios {
+  id              Int      @id @default(autoincrement())
+  nome            String?  @db.VarChar(100)
+  tabela_salarial String?  @db.VarChar(45)
+  step            String?  @db.VarChar(5)
+  salario         Int?
+  vinculos_id     Int
+  target_pai      Int?
+  target_comissao Int?
+  fgts            Int?
+  vinculos        vinculos @relation(fields: [vinculos_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_cargos_salarios_vinculos1")
+
+  @@index([vinculos_id], map: "fk_cargos_salarios_vinculos1_idx")
+}
+
+model modelos_cargos_salarios {
+  id                         Int                          @id @default(autoincrement())
+  nome                       String?                      @db.VarChar(45)
+  ano                        Int?
+  mes                        Int?                         @db.TinyInt
+  simulacoes_cargos_salarios simulacoes_cargos_salarios[]
+}
+
+model simulacoes_cargos_salarios {
+  id                         Int                     @id @default(autoincrement())
+  modelos_cargos_salarios_id Int
+  nome                       String?                 @db.VarChar(100)
+  tabela_salarial            String?                 @db.VarChar(45)
+  step                       String?                 @db.VarChar(5)
+  salario                    Int?
+  vinculos_id                Int
+  target_pai                 Int?
+  target_comissao            Int?
+  fgts                       Int?
+  percentuais                String?                 @db.VarChar(45)
+  vinculos                   vinculos                @relation(fields: [vinculos_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_cargos_salarios_vinculos10")
+  modelos_cargos_salarios    modelos_cargos_salarios @relation(fields: [modelos_cargos_salarios_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_simulacoes_cargos_salarios_modelos_cargos_salarios1")
+
+  @@index([vinculos_id], map: "fk_cargos_salarios_vinculos1_idx")
+  @@index([modelos_cargos_salarios_id], map: "fk_simulacoes_cargos_salarios_modelos_cargos_salarios1_idx")
 }
