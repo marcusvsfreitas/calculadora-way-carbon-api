@@ -9,6 +9,7 @@ interface ICreateModeloCargoSalarioDTO {
 interface IModelosCargosSalariosRepository {
   create({ nome, ano, mes } : ICreateModeloCargoSalarioDTO) : Promise<ModeloCargoSalario>;
   list() : Promise<Array<ModeloCargoSalario>>;
+  findByID(id: Number) : Promise<ModeloCargoSalario>;
 }
 
 export { IModelosCargosSalariosRepository, ICreateModeloCargoSalarioDTO };
