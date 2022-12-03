@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { cargosSalariosRoutes } from './cargos-salarios.routes';
 import { funcionariosRoutes } from './funcionarios.routes';
 import { modelosCargosSalariosRoutes } from './modelos-cargos-salarios.routes';
 import { vinculosRoutes } from './vinculos.routes';
@@ -12,5 +13,6 @@ router.get("/ping", (request, response) => {
 router.use("/funcionarios", funcionariosRoutes);
 router.use("/vinculos", vinculosRoutes);
 router.use("/modelos-cargos-salarios", modelosCargosSalariosRoutes);
+router.use("/cargos-salarios", cargosSalariosRoutes);
 
 export { router };
