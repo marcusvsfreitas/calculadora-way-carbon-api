@@ -32,7 +32,6 @@ class PrismaModelosCargosSalariosRepository implements IModelosCargosSalariosRep
   }
 
   async findByID(id: number): Promise<ModeloCargoSalario> {
-    console.log("findByID ", id);
     const modeloCargoSalario = await prisma.modelos_cargos_salarios.findUnique({
       where: {
         id

@@ -53,10 +53,38 @@ class PrismaSimulacoesCargosSalariosRepository implements ISimulacoesCargosSalar
     const modelosCargosSalarios = await prisma.simulacoes_cargos_salarios.findMany({
       where: {
         modelos_cargos_salarios_id
+      },
+      orderBy: [
+        {
+         nome: 'asc' 
+        }
+      ]
+    });
+
+    const auxNomesModelosCargosSalariosAgrupados = [];
+    const modelosCargosSalariosAgrupados = [];
+
+    modelosCargosSalarios.forEach((modelo) => {
+      if(auxNomesModelosCargosSalariosAgrupados.includes(modelo.nome)) {
+        const refAgrupamento = modelosCargosSalariosAgrupados.find(agrupamento => agrupamento.nome == modelo.nome);
+
+        refAgrupamento[`step${modelo.step}`] = modelo.salario;
+      } else {
+        const modeloTratado = {
+          ...modelo,
+          id: undefined,
+          step: undefined,
+          salario: undefined
+        }
+        modeloTratado[`step${modelo.step}`] = modelo.salario;
+
+        modelosCargosSalariosAgrupados.push(modeloTratado);
+        auxNomesModelosCargosSalariosAgrupados.push(modelo.nome);
       }
     });
 
-    return modelosCargosSalarios;  
+
+    return modelosCargosSalariosAgrupados;  
   }
 }
 
