@@ -19,8 +19,6 @@ class PrismaSimulacoesCargosSalariosRepository implements ISimulacoesCargosSalar
     modelos_cargos_salarios_id, 
     nome, 
     tabela_salarial, 
-    step,
-    salario,
     vinculos_id,
     target_pai,
     target_comissao,
@@ -31,8 +29,6 @@ class PrismaSimulacoesCargosSalariosRepository implements ISimulacoesCargosSalar
       modelos_cargos_salarios_id, 
       nome, 
       tabela_salarial, 
-      step,
-      salario,
       vinculos_id,
       target_pai,
       target_comissao,
@@ -50,41 +46,24 @@ class PrismaSimulacoesCargosSalariosRepository implements ISimulacoesCargosSalar
   }
 
   async list(modelos_cargos_salarios_id: number): Promise<SimulacaoCargoSalario[]> {
-    const modelosCargosSalarios = await prisma.simulacoes_cargos_salarios.findMany({
+    const simulacoesCargosSalarios = await prisma.simulacoes_cargos_salarios.findMany({
       where: {
         modelos_cargos_salarios_id
       },
       orderBy: [
         {
+         tabela_salarial: 'asc' 
+        },
+        {
          nome: 'asc' 
-        }
-      ]
-    });
-
-    const auxNomesModelosCargosSalariosAgrupados = [];
-    const modelosCargosSalariosAgrupados = [];
-
-    modelosCargosSalarios.forEach((modelo) => {
-      if(auxNomesModelosCargosSalariosAgrupados.includes(modelo.nome)) {
-        const refAgrupamento = modelosCargosSalariosAgrupados.find(agrupamento => agrupamento.nome == modelo.nome);
-
-        refAgrupamento[`step${modelo.step}`] = modelo.salario;
-      } else {
-        const modeloTratado = {
-          ...modelo,
-          id: undefined,
-          step: undefined,
-          salario: undefined
-        }
-        modeloTratado[`step${modelo.step}`] = modelo.salario;
-
-        modelosCargosSalariosAgrupados.push(modeloTratado);
-        auxNomesModelosCargosSalariosAgrupados.push(modelo.nome);
+        },
+      ],
+      include: {
+        simulacoes_cargos_salarios_steps: true
       }
     });
 
-
-    return modelosCargosSalariosAgrupados;  
+    return simulacoesCargosSalarios;
   }
 }
 

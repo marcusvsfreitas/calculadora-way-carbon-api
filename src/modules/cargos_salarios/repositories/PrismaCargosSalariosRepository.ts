@@ -18,8 +18,6 @@ class PrismaCargosSalariosRepository implements ICargosSalariosRepository {
   async create({ 
     nome, 
     tabela_salarial, 
-    step,
-    salario,
     vinculos_id,
     target_pai,
     target_comissao,
@@ -28,8 +26,6 @@ class PrismaCargosSalariosRepository implements ICargosSalariosRepository {
     const cargoSalario = await prisma.cargos_salarios.create({ data: { 
       nome, 
       tabela_salarial, 
-      step,
-      salario,
       vinculos_id,
       target_pai,
       target_comissao,
