@@ -26,6 +26,8 @@ interface ISimulacoesCargosSalariosRepository {
   createMany(simulacoesCargosSalarios: Array<ICreateSimulacoesCargosSalariosDTO>) : Promise<void>;
   
   list(modelos_cargos_salarios_id: number) : Promise<Array<SimulacaoCargoSalario>>;
+
+  changePercentual(simulacoes_cargos_salarios_id: number, percentuais: string) : Promise<void>;
 }
 
 export { ISimulacoesCargosSalariosRepository, ICreateSimulacoesCargosSalariosDTO};

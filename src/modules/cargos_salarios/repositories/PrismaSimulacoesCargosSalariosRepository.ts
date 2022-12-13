@@ -65,6 +65,17 @@ class PrismaSimulacoesCargosSalariosRepository implements ISimulacoesCargosSalar
 
     return simulacoesCargosSalarios;
   }
+
+  async changePercentual(simulacoes_cargos_salarios_id: number, percentuais: string) : Promise<void> {
+    await prisma.simulacoes_cargos_salarios.update({
+      where: {
+        id: simulacoes_cargos_salarios_id
+      },
+      data: {
+        percentuais
+      }
+    });
+  }
 }
 
 export { PrismaSimulacoesCargosSalariosRepository };
